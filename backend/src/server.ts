@@ -2,6 +2,7 @@ import express, { type Application, type Request, type Response } from 'express'
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectionDB from './config/db.js';
+import authRoutes from './routes/authRoutes.js';
 
 // Load environment .env
 dotenv.config();
@@ -14,6 +15,7 @@ const app: Application = express();
 // Middleware
 app.use(cors()); // Hit API from different domain 
 app.use(express.json()); // Parse JSON request body
+app.use('/api/auth', authRoutes); // Auth routes
 
 // Routes
 app.get('/api/health', (req: Request, res: Response) => {
