@@ -1,75 +1,77 @@
-# React + TypeScript + Vite
+### 1. Wrap Up Backend (Tutup Tiket Issue #2)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Buka terminal lu (pastikan ada di root folder project), lalu jalankan runtutan perintah ini buat nyimpen, ngegabungin ke development, dan otomatis nutup Issue di GitHub lu:
 
-Currently, two official plugins are available:
+```bash
+# 1. Masukin semua perubahan
+git add .
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+# 2. Commit dengan pesan penutup Issue (Sesuaikan nomor #2 dengan nomor Issue lu di GitHub)
+git commit -m "feat: complete core backend and midtrans integration (closes #2)"
 
-## React Compiler
+# 3. Pindah ke branch utama (development)
+git checkout development
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# 4. Gabungkan kerjaan dari branch fitur tadi
+git merge feature/issue-2-core-backend
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+# 5. Push ke cloud (GitHub) biar aman!
+git push origin development
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Welcome to Frontend (React + TS + Tailwind v4)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Sekarang kita ganti topi dari Backend Engineer jadi Frontend Engineer. Di tahap ini, hasil kerja keras lu di backend bakal beneran kelihatan wujud fisiknya.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Karena waktu kita sisa beberapa hari lagi dalam sprint seminggu ini, kita harus pakai tools yang bikin kerjaan slicing UI dan pemanggilan API jadi super cepet.
 
+**Buka Issue Baru di GitHub:**
+Bikin tiket baru dengan judul `[Frontend] Slicing Auth Pages & Routing Setup`. Anggaplah ini dapet nomor `#3`.
+Lalu bikin branch baru di terminal:
+
+```bash
+git checkout -b feature/issue-3-frontend-auth
+```
+
+**Install Senjata Utama Frontend:**
+Masuk ke folder `frontend`, lalu install tiga library wajib industri ini:
+- `react-router-dom`: Buat ngatur perpindahan halaman (Routing).
+- `axios`: Buat nge-hit API backend lu dengan lebih rapi dibanding fetch bawaan.
+- `lucide-react`: Buat icon-icon UI yang cakep dan ringan.
+
+```bash
+cd frontend
+npm install react-router-dom axios lucide-react
+```
+
+### 3. Setup Routing Dasar (Kerangka UI)
+
+Biar lu kebayang, kita bakal bikin 3 halaman utama dulu: Login, Register, dan Dashboard.
+
+Buka `frontend/src/App.tsx`, hapus semua isinya, dan ubah jadi kerangka routing ini:
+
+```tsx
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
+// Nanti kita bikin komponennya, sekarang panggil nama aja dulu
+const Login = () => <div className="p-10 text-2xl">Halaman Login UI</div>;
+const Register = () => <div className="p-10 text-2xl">Halaman Register UI</div>;
+const Dashboard = () => <div className="p-10 text-2xl">Halaman Dashboard Utama</div>;
+
+function App() {
+  return (
+    <Router>
+      <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
 ```
